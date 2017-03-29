@@ -3,7 +3,9 @@
     "description": "Small and Efficient PHP Framework",
     "type": "php, framework",
     "require": {
-        "php": "7.*"
+        "php": "7.*",
+        "illuminate/view": "^5.4",
+        "windwalker/renderer": "^3.1"
     },
     "license": "MIT",
     "authors": [
