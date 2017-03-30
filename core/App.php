@@ -78,9 +78,8 @@ class App
     /**
      * Bootstrap our app
      */
-    public static function boot()
+    public function boot()
     {
-        self::get();
         self::get('request')->boot();
         self::get('response')->boot();
         self::get('router')->boot();

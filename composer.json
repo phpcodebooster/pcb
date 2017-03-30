@@ -15,9 +15,7 @@
         }
     ],
     "autoload": {
-        "classmap": [
-            "core/Helpers.php"
-        ],
+        "files": ["core/Helpers.php"],
         "psr-4": {
             "App\\": "app",
             "PCB\\": "core"

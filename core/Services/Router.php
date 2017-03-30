@@ -29,7 +29,7 @@ class Router
                  if( method_exists($controller_obj, $controller_function) )
                  {
                      // call the target controller and get the response
-                     $response = call_user_func_array(array($controller_obj, $controller_function), []);
+                     echo call_user_func_array(array($controller_obj, $controller_function), []);
                  }
                  else {
                      throw new \Exception("Method: <b>{$controller_function}</b> does not exist in <b>{$controller}</b>.");

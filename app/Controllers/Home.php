@@ -12,6 +12,6 @@ class Home
 {
     public function index()
     {
-        var_dump(__CLASS__);
+        return view('index');
     }
 }
