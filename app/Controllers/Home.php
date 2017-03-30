@@ -12,6 +12,6 @@ class Home
 {
     public function index()
     {
-        return view('index');
+        return view('index', ['message' => 'Welcome to my site']);
     }
 }
