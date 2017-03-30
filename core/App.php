@@ -10,10 +10,19 @@ class App
     private static $services = [];
     private static $core_root = null;
     private static $app_root  = null;
+
+    /**
+     * Make sure to organize code in order of
+     * Keys it matters and loads service in
+     * Order they provided..
+     *
+     * @var array
+     */
     private static $core_services = [
-        'router'  => Services\Router::class,
-        'request' => Services\Request::class,
-        'response' => Services\Response::class
+        'request'  => Services\Request::class,
+        'response' => Services\Response::class,
+        'router'   => Services\Router::class,
+        'database' => Services\Database::class
     ];
 
     private function __clone() {}
@@ -80,8 +89,9 @@ class App
      */
     public function boot()
     {
-        self::get('request')->boot();
-        self::get('response')->boot();
-        self::get('router')->boot();
+        // boot all the core services
+        foreach (self::$core_services as $service => $service_cls) {
+            self::get($service)->boot();
+        }
     }
 }
