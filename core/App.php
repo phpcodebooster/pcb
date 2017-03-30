@@ -7,6 +7,7 @@ session_start();
 class App
 {
     private static $root = null;
+    private static $configs  = [];
     private static $services = [];
     private static $core_root = null;
     private static $app_root  = null;
@@ -37,6 +38,23 @@ class App
         self::$core_root = __DIR__;
         self::$root = dirname(__DIR__);
         self::$app_root = dirname(__DIR__). '/app/';
+
+        $finder = new \Symfony\Component\Finder\Finder();
+        $finder->files()->in(self::$app_root. '/Configs');
+
+        foreach ($finder as $file) {
+            $config_key = str_replace('.php', '', $file->getRelativePathname());
+            self::$configs[$config_key] = include_once $file->getRealPath();
+        }
+    }
+
+    /**
+     * @param $key
+     * @return array|mixed
+     */
+    public static function config($key)
+    {
+        return array_key_exists($key, self::$configs) ? self::$configs[$key] : [];
     }
 
     /**
