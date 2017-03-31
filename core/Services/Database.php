@@ -31,7 +31,7 @@ class Database
             {
                 foreach ($connections as $key => $configs)
                 {
-                    self::$mysql_connections[$type][$key] = MySQLConnector::get($type, $key, $configs);
+                    self::$mysql_connections[$type][$key] = new \PDO("mysql:host={$configs['host']};dbname={$configs['database']}", $configs['username'], $configs['password']);
                 }
             }
         }
@@ -40,7 +40,12 @@ class Database
         {
             foreach ($db_configs['redis'] as $type => $config)
             {
-                self::$redis_connections[$type] = RedisConnector::get('redis', $type, $config);
+                self::$redis_connections[$type] = new \Predis\Client([
+                    'scheme'   => $config['scheme'],
+                    'host'     => $config['host'],
+                    'port'     => $config['port'],
+                    'password' => $config['password'],
+                ]);
             }
         }
     }
