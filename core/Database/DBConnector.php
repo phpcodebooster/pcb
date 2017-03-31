@@ -22,7 +22,7 @@ abstract class DBConnector
     private function __wakeup() {}
     private function __construct() {}
 
-    public function get($type, $key, $configs=[])
+    public static function get($type, $key, $configs=[])
     {
         $key = md5($type. '-' .$key);
         if ( !array_key_exists($key, self::$connectors) ) {

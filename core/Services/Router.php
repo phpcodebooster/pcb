@@ -13,8 +13,6 @@ class Router
      */
     public function __construct()
     {
-        $response = null;
-
         try {
 
             // get request object
@@ -36,7 +34,7 @@ class Router
                  if( method_exists($controller_obj, $controller_function) )
                  {
                      // call the target controller and get the response
-                     $response = $controller_obj->$controller_function();
+                     echo call_user_func_array(array($controller_obj, $controller_function), array());
                  }
                  else {
                      throw new \Exception("Method: <b>{$controller_function}</b> does not exist in <b>{$controller}</b>.");
@@ -49,7 +47,5 @@ class Router
         catch (\Exception $e) {
             exit($e->getMessage());
         }
-
-        echo $response;
     }
 }

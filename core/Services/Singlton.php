@@ -22,7 +22,7 @@ trait Singleton {
     private function __clone() {}
     private function __wakeup() {}
 
-    public function getInstance()
+    public static function getInstance()
     {
         $class_name = get_called_class();
         if ( !array_key_exists($class_name, self::$classes) ) {
