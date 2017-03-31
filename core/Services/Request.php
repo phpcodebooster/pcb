@@ -6,13 +6,18 @@ use PCB\App;
 
 class Request
 {
+    use Singleton;
+
     private $req_params     = [];
     private $env_params     = [];
     private $server_params  = [];
     private $cookies_params = [];
     private $session_params = [];
 
-    public function boot()
+    /**
+     * Request constructor.
+     */
+    public function __construct()
     {
         $this->env_params = $_ENV;
         $this->req_params = $_REQUEST;

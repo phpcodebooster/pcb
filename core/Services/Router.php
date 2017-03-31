@@ -6,8 +6,15 @@ use PCB\App;
 
 class Router
 {
-    public function boot()
+    use Singleton;
+
+    /**
+     * Router constructor.
+     */
+    public function __construct()
     {
+        $response = null;
+
         try {
 
             // get request object
@@ -29,7 +36,7 @@ class Router
                  if( method_exists($controller_obj, $controller_function) )
                  {
                      // call the target controller and get the response
-                     echo call_user_func_array(array($controller_obj, $controller_function), []);
+                     $response = $controller_obj->$controller_function();
                  }
                  else {
                      throw new \Exception("Method: <b>{$controller_function}</b> does not exist in <b>{$controller}</b>.");
@@ -42,5 +49,7 @@ class Router
         catch (\Exception $e) {
             exit($e->getMessage());
         }
+
+        echo $response;
     }
 }

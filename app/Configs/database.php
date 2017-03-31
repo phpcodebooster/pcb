@@ -4,19 +4,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Default Database Connection Name
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify which of the database connections below you wish
-    | to use as your default connection for all database work. Of course
-    | you may use many connections at once using the Database library.
-    |
-    */
-
-    'default' => 'mysql',
-
-    /*
-    |--------------------------------------------------------------------------
     | Database Connections
     |--------------------------------------------------------------------------
     |
@@ -30,22 +17,42 @@ return [
     | choice installed on your machine before you begin development.
     |
     */
-
-    'connections' => [
-		'mysql' => [
-            'username'  => 'dbuser',
-            'password'  => 'password',
-            'driver'    => 'mysql',
-            'database'  => 'python',
-            'hosts'     => [
-                'read' => [
-                    'default' => '127.0.1.1'
-                ],
-                'write' => [
-                    'default' => '127.0.1.1'
-                ]
+    'mysql' => [
+        'read' => [
+            'default' => [
+                'host'      => '127.0.0.1',
+                'username'  => 'root',
+                'password'  => 'root',
+                'database'  => 'pcb'
+            ]
+        ],
+        'write' => [
+            'default' => [
+                'host'      => '127.0.0.1',
+                'username'  => 'root',
+                'password'  => 'root',
+                'database'  => 'pcb'
             ]
         ]
-    ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Redis Databases
+    |--------------------------------------------------------------------------
+    |
+    | Redis is an open source, fast, and advanced key-value store that also
+    | provides a richer set of commands than a typical key-value systems
+    | such as APC or Memcached. Laravel makes it easy to dig right in.
+    |
+    */
+    'redis' => [
+        'default' => [
+            'host'     => '127.0.0.1',
+            'password' => null,
+            'port'     => 6379,
+            'scheme'   => 'tcp'
+        ]
+    ],
 ];
 

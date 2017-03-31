@@ -4,50 +4,71 @@
 namespace PCB\Services;
 
 use PCB\App;
-use PCB\DBDrivers\MySQLConnector;
+use PCB\Database\MySQLConnector;
+use PCB\Database\RedisConnector;
 
 class Database
 {
-    private static $connections  = [];
+    use Singleton;
 
-    public function boot()
+    private static $redis_connections = [];
+    private static $mysql_connections = [];
+
+    /**
+     * Database constructor.
+     */
+    public function __construct()
     {
         $db_configs  = App::config('database');
         if(!$db_configs) {
             throw new \Exception('database config file is missing.');
         }
 
-        // default to mysql conection
-        $default_connection = !empty($db_configs['default']) ? $db_configs['default'] : 'mysql';
-
         // get all read/write connections
-        if( !empty($db_configs['connections'][$default_connection]['hosts']) )
+        if( !empty($db_configs['mysql']) )
         {
-            foreach ($db_configs['connections'][$default_connection]['hosts'] as $type => $connections)
+            foreach ($db_configs['mysql'] as $type => $connections)
             {
                 foreach ($connections as $key => $configs)
                 {
-                    self::$connections[$type][$key] = new MySQLConnector($type, $key);
+                    self::$mysql_connections[$type][$key] = MySQLConnector::get($type, $key, $configs);
                 }
+            }
+        }
+
+        if( !empty($db_configs['redis']) )
+        {
+            foreach ($db_configs['redis'] as $type => $config)
+            {
+                self::$redis_connections[$type] = RedisConnector::get('redis', $type, $config);
             }
         }
     }
 
     /**
-     * @param $key
+     * @param string $key
      * @return null
      */
-    public function read($key)
+    public function getRedisConnection($key='default')
     {
-        return array_key_exists($key, self::$connections['read']) ? self::$connections['read'][$key] : null;
+        return array_key_exists($key, self::$redis_connections) ? self::$redis_connections[$key] : null;
     }
 
     /**
-     * @param $key
+     * @param string $key
      * @return null
      */
-    public function write($key)
+    public function getMySQLReadConnection($key='default')
     {
-        return array_key_exists($key, self::$connections['write']) ? self::$connections['write'][$key] : null;
+        return array_key_exists($key, self::$mysql_connections['read']) ? self::$mysql_connections['read'][$key] : null;
+    }
+
+    /**
+     * @param string $key
+     * @return null
+     */
+    public function getMySQLWriteConnection($key='default')
+    {
+        return array_key_exists($key, self::$mysql_connections['write']) ? self::$mysql_connections['write'][$key] : null;
     }
 }

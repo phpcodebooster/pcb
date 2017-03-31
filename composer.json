@@ -5,7 +5,8 @@
     "require": {
         "php": "7.*",
         "illuminate/view": "^5.4",
-        "windwalker/renderer": "^3.1"
+        "windwalker/renderer": "^3.1",
+        "predis/predis": "^1.1"
     },
     "license": "MIT",
     "authors": [
@@ -15,7 +16,10 @@
         }
     ],
     "autoload": {
-        "files": ["core/Helpers.php"],
+        "files": [
+          "core/Helpers.php",
+          "core/Services/Singlton.php"
+        ],
         "psr-4": {
             "App\\": "app",
             "PCB\\": "core"

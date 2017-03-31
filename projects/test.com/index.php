@@ -3,4 +3,4 @@
 require_once __DIR__. '/../../vendor/autoload.php';
 
 
-\PCB\App::get()->boot();
+\PCB\App::get();

@@ -14,7 +14,7 @@ class Home
 {
     public function index()
     {
-        App::get('database');
+        $read_connection = App::get('database')->getRedisConnection();
 
         return view('index', ['message' => 'Welcome to my site']);
     }
